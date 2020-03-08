@@ -7,10 +7,8 @@ import android.widget.TextView;
 
 public class PagerFour extends BasePager {
     public TextView textView;
-
     public PagerFour(Context context) {
         super(context);
-
     }
 
     @Override

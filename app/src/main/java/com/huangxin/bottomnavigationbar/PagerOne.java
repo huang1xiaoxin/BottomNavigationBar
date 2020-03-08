@@ -1,6 +1,8 @@
 package com.huangxin.bottomnavigationbar;
 
 import android.content.Context;
+import android.content.pm.PackageManager;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.TextView;
@@ -22,5 +24,8 @@ public class PagerOne extends BasePager {
     public void initData() {
         super.initData();
         textView.setText("第一个页面");
+
+
+
     }
 }
