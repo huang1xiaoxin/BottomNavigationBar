@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:orientation="vertical"
+    android:background="#FFFFFF"
+    android:layout_height="match_parent"
+    tools:context=".LauncherActivity">
+    <FrameLayout
+        android:id="@+id/fr_page"
+        android:layout_weight="1"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"/>
+    <RadioGroup
+        android:id="@+id/rg_button"
+        android:layout_gravity="center_horizontal"
+        android:gravity="center"
+        android:background="#11000000"
+        android:padding="5dp"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <RadioButton
+            android:id="@+id/rb_page1"
+            style="@style/buttonStyle"
+            android:drawableTop="@drawable/radio_se"
+            android:text="页面一"
+           />
+        <RadioButton
+            android:id="@+id/rb_page2"
+            style="@style/buttonStyle"
+            android:drawableTop="@drawable/radio_se"
+            android:text="页面二"
+           />
+        <RadioButton
+            android:id="@+id/rb_page3"
+            style="@style/buttonStyle"
+            android:drawableTop="@drawable/radio_se"
+            android:text="页面三"
+         />
+        <RadioButton
+
+            android:id="@+id/rb_page4"
+            style="@style/buttonStyle"
+            android:drawableTop="@drawable/radio_se"
+            android:text="页面四"
+           />
+
+    </RadioGroup>
+
+</LinearLayout>
