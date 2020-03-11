@@ -14,7 +14,7 @@ public abstract class BasePager {
     public boolean isInitData=false;
     public BasePager(Context context){
         this.context=context;
-       rootView=initView();//调用子类的方法
+        rootView=initView();//调用子类的方法
         isInitData=false;
     }
     //强制让每个子类去实现这个方法初始化视图
