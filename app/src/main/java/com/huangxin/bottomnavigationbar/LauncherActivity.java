@@ -3,17 +3,21 @@ package com.huangxin.bottomnavigationbar;
 import android.os.Bundle;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.RadioButton;
 import android.widget.RadioGroup;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.FragmentActivity;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentPagerAdapter;
 import androidx.viewpager.widget.PagerAdapter;
 import androidx.viewpager.widget.ViewPager;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class LauncherActivity extends FragmentActivity {
-    private ArrayList<BasePager> pagerList;
+    private List<BasePagerFragment> pagerList;
     private RadioGroup radioGroup;
     private ViewPager viewPager;
     private int index = 0;
@@ -26,11 +30,11 @@ public class LauncherActivity extends FragmentActivity {
         radioGroup = findViewById(R.id.rg_button);
         viewPager = findViewById(R.id.fr_page);
         pagerList = new ArrayList<>();
-        pagerList.add(new PagerOne(this));
-        pagerList.add(new PagerTwo(this));
-        pagerList.add(new PagerThree(this));
-        pagerList.add(new PagerFour(this));
-        viewPager.setAdapter(new MyAdapter());
+        pagerList.add(new PagerFragmentOne());
+        pagerList.add(new PagerFragmentTwo());
+        pagerList.add(new PagerFragmentThree());
+        pagerList.add(new PagerFragmentFour());
+        viewPager.setAdapter(new FragmentAdapter(getSupportFragmentManager(), FragmentPagerAdapter.BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT,pagerList));
         //设置RadioGroup的监听事件
         radioGroup.setOnCheckedChangeListener(new MyOnCheckedChangeListener());
         //默认是第一个
@@ -52,7 +56,11 @@ public class LauncherActivity extends FragmentActivity {
          */
         @Override
         public void onPageSelected(int position) {
-            index=position;
+            if (radioGroup.getChildAt(position) instanceof RadioButton){
+                RadioButton radioButton= (RadioButton) radioGroup.getChildAt(position);
+                radioButton.setChecked(true);
+            }else {
+            }
         }
         /**
          监听组件的滑动状态变化。state有3种取值：
@@ -62,56 +70,6 @@ public class LauncherActivity extends FragmentActivity {
          */
         @Override
         public void onPageScrollStateChanged(int state) {
-            //活动结束的时候改变radioButton的状态
-            if(state==0){
-                int id=R.id.rb_page1;
-                switch (index){
-                    case 0:
-                        id=R.id.rb_page1;
-                        break;
-                    case 1:
-                        id=R.id.rb_page2;
-                        break;
-                    case 2:
-                        id=R.id.rb_page3;
-                        break;
-                    case 3:
-                        id=R.id.rb_page4;
-                        break;
-                        default:
-                            break;
-                }
-                radioGroup.check(id);
-
-        }
-        }
-    }
-    class MyAdapter extends PagerAdapter {
-
-        @Override
-        public int getCount() {
-            return pagerList.size();
-        }
-
-        @Override
-        public boolean isViewFromObject(@NonNull View view, @NonNull Object object) {
-            return view == object;
-        }
-
-        @NonNull
-        @Override
-        public Object instantiateItem(@NonNull ViewGroup container, int position) {
-            BasePager basePager = pagerList.get(position);
-            //初始化数据
-            basePager.initData();
-            View view = basePager.rootView;
-            container.addView(view);
-            return view;
-        }
-
-        @Override
-        public void destroyItem(@NonNull ViewGroup container, int position, @NonNull Object object) {
-            container.removeView((View) object);
         }
     }
 
@@ -139,7 +97,7 @@ public class LauncherActivity extends FragmentActivity {
                     break;
             }
 
-                viewPager.setCurrentItem(index);
+                viewPager.setCurrentItem(index,false);
 
         }
     }
