@@ -28,4 +28,5 @@ public class PagerFragmentTwo extends BasePagerFragment {
         return view;
     }
 
+
 }
