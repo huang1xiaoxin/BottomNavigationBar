@@ -2,6 +2,7 @@ package com.huangxin.bottomnavigationbar;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -25,11 +26,16 @@ public abstract class BasePagerFragment extends Fragment {
     public boolean isFirstLoadData;
     public boolean isReuseView;
 
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        context = getActivity();
+        initValue();
+    }
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        context = getActivity();
-        initValue();
         return initView(inflater, container, savedInstanceState);
     }
 
@@ -41,6 +47,7 @@ public abstract class BasePagerFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         if (rootView == null) {
             rootView = view;
+            Log.e("页面", "onViewCreated: 设置View");
         }
         super.onViewCreated(isReuseView ? rootView : view, savedInstanceState);
     }
@@ -73,22 +80,27 @@ public abstract class BasePagerFragment extends Fragment {
 
     public void initValue() {
         isFirstLoadData = true;
-        isReuseView=false;
+        isReuseView=true;
+        rootView=null;
     }
 
+
     @Override
-    public void onDestroyView() {
-        super.onDestroyView();
+    public void onDestroy() {
+        super.onDestroy();
+        Log.e("页面", "onDestroy: ");
         isFirstLoadData = true;
-        isReuseView=false;
+        isReuseView=true;
     }
 
     /**
-     * 设置是否复用View，默认为false,关闭
-     * view 的复用是指，ViewPager 在销毁和重建 Fragment 时会不断调用 onCreateView() -> onDestroyView()
+     * 设置是否复用View，默认为复用,true
+     * view 的复用是指，ViewPager 在销毁和重建 Fragment 时会不断调用 onCreateView() -> onDestroyView
      *之间的生命函数，这样可能会出现重复创建 view 的情况，导致界面上显示多个相同的 Fragment
      * view 的复用其实就是指保存第一次创建的 view，后面再 onCreateView() 时直接返回第一次创建的 view
+     *如果选择false则需要每次显示都要加载数据，则要重写fragmentEveryLoadingData()
      *
+     * 当ViewPage切换时会调用destroyItem()的方法，其父类然后会调用onDestroyView(),因此也可以在onDestroyView中做处理
      *
      * @param reuseView
      */

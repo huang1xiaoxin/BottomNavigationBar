@@ -29,4 +29,12 @@ public class FragmentAdapter extends FragmentPagerAdapter {
         return fragmentList != null ? fragmentList.size() : 0;
     }
 
+    @Override
+    public void destroyItem(@NonNull ViewGroup container, int position, @NonNull Object object) {
+        //判断是否要复用Fragment的View
+        if (!fragmentList.get(position).isReuseView()){
+            super.destroyItem(container, position, object);
+        }
+
+    }
 }
